@@ -1,0 +1,373 @@
+# Trivia API
+## objective Overview
+Trivia API is RESTful API basic example supported by [Udacity](www.udacity.com) and [Egypt FWD](https://egfwd.com)
+Trivia API is mainly full stack webpage that manage the trivia app and play the game.
+user can play quizzes either generally or filered by a category (Science,Arts,Sports,History,Geography and Entertainment)
+each question has a difficulty level.
+## Techinical Overview 
+Trivia API performs basic CRUD operations on Postgresql database,handles common errors such as 404 and 422.
+Trivia API also uses CORS and configures Access-Control-Allow-Methods to use meothods:GET,POST and DELETE.
+most responses including pagination ,and finnaly Trivia API is testes using testunits>
+##Categories
+###Url
+```bash
+/categories
+```
+###Method
+```bash
+Get
+```
+###Discription  
+get all available categories
+###Response
+```bash
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  }
+}
+```
+##Questions
+###Url
+```bash
+/questions
+```
+###Method
+```bash
+Get
+```
+###Discription
+get  questions, including pagination (every 10 questions) and returns a list of questions, number of total questions, current category, categories.
+###Response
+```bash
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "current_category": [
+    4,
+    6,
+    3,
+    1,
+    4,
+    1,
+    4,
+    1,
+    5,
+    3
+  ],
+  "page": 1,
+  "questions": [
+    {
+      "answer": "Scarab",
+      "category": 4,
+      "difficulty": 4,
+      "id": 23,
+      "question": "Which dung beetle was worshipped by the ancient Egyptians?"
+    },
+    {
+      "answer": "Uruguay",
+      "category": 6,
+      "difficulty": 4,
+      "id": 11,
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    },
+    {
+      "answer": "answer new q 20",
+      "category": 3,
+      "difficulty": 3,
+      "id": 50,
+      "question": "new question 20"
+    },
+    {
+      "answer": "The Liver",
+      "category": 1,
+      "difficulty": 4,
+      "id": 20,
+      "question": "What is the heaviest organ in the human body?"
+    },
+    {
+      "answer": "answer new q 12",
+      "category": 4,
+      "difficulty": 4,
+      "id": 44,
+      "question": "new question 12"
+    },
+    {
+      "answer": "new answer 9",
+      "category": 1,
+      "difficulty": 3,
+      "id": 45,
+      "question": "new q 9"
+    },
+    {
+      "answer": "George Washington Carver",
+      "category": 4,
+      "difficulty": 2,
+      "id": 12,
+      "question": "Who invented Peanut Butter?"
+    },
+    {
+      "answer": "Blood",
+      "category": 1,
+      "difficulty": 4,
+      "id": 22,
+      "question": "Hematology is a branch of medicine involving the study of what?"
+    },
+    {
+      "answer": "Tom Cruise",
+      "category": 5,
+      "difficulty": 4,
+      "id": 4,
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    },
+    {
+      "answer": "Agra",
+      "category": 3,
+      "difficulty": 2,
+      "id": 15,
+      "question": "The Taj Mahal is located in which Indian city?"
+    }
+  ],
+  "total_questions": 22
+}
+``` 
+###Url
+```bash
+/categories/<id>/questions
+```
+###Method
+```bash
+Get
+```
+###Discription
+get questions based on category where <id> is the id of required category. 
+###Response
+```bash
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "current_category": [
+    4,
+    4,
+    4,
+    4
+  ],
+  "page": 1,
+  "questions": [
+    {
+      "answer": "George Washington Carver",
+      "category": 4,
+      "difficulty": 2,
+      "id": 12,
+      "question": "Who invented Peanut Butter?"
+    },
+    {
+      "answer": "Scarab",
+      "category": 4,
+      "difficulty": 4,
+      "id": 23,
+      "question": "Which dung beetle was worshipped by the ancient Egyptians?"
+    },
+    {
+      "answer": "new answer 9",
+      "category": 4,
+      "difficulty": 3,
+      "id": 42,
+      "question": "new q 9"
+    },
+    {
+      "answer": "answer new q 12",
+      "category": 4,
+      "difficulty": 4,
+      "id": 44,
+      "question": "new question 12"
+    }
+  ],
+  "total_questions": 4
+}
+```
+###Url
+```bash
+/questions/<id>
+```
+###Method
+```bash
+Delete
+```
+###Discription
+delete question where <id> is the id of required question.
+###Response:
+```bash
+{
+  "message": "Deleted",
+  "success": true
+}
+```
+###Url
+```bash
+/questions
+```
+###Method
+```bash
+Post
+```
+###Discription
+post a new question,which has a question and answer text,category, and difficulty.
+###Data:
+```bash
+{
+      "answer": "Scarab",
+      "category": 4,
+      "difficulty": 4,
+      "id": 23,
+      "question": "Which dung beetle was worshipped by the ancient Egyptians?"
+    }
+```
+###Response
+```bash
+{
+  "message": "Inserted",
+  "success": true
+}
+```
+##Url
+```bash
+/questions/search
+```
+###Method
+```bash
+Post
+```
+###Discription
+get questions based on a search term (case-insensative).returns any questions for whom the search term is a substring of the question. 
+###Data 
+```bash
+{
+	"searchTerm":"which"
+}
+```
+###Response
+```bash
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "current_category": [
+    6,
+    3,
+    3,
+    2,
+    4
+  ],
+  "questions": [
+    {
+      "answer": "Uruguay",
+      "category": 6,
+      "difficulty": 4,
+      "id": 11,
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    },
+    {
+      "answer": "The Palace of Versailles",
+      "category": 3,
+      "difficulty": 3,
+      "id": 14,
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    },
+    {
+      "answer": "Agra",
+      "category": 3,
+      "difficulty": 2,
+      "id": 15,
+      "question": "The Taj Mahal is located in which Indian city?"
+    },
+    {
+      "answer": "Escher",
+      "category": 2,
+      "difficulty": 1,
+      "id": 16,
+      "question": "Which Dutch graphic artist–initials M C was a creator of optical illusions?"
+    },
+    {
+      "answer": "Scarab",
+      "category": 4,
+      "difficulty": 4,
+      "id": 23,
+      "question": "Which dung beetle was worshipped by the ancient Egyptians?"
+    }
+  ],
+  "searchTerm": "which"
+}
+```
+##Quizzes
+
+##Url
+```bash
+/quizzes
+```
+###Method
+```bash
+Post
+```
+###Discription
+get questions to play the quiz.returns a random questions within the given category,if provided, and that is not one of the previous questions.data must contains category (for all catgeories use category 0 ) and previous question ids. 
+###Data 
+```bash
+{
+	"previous_questions":[7],
+	"quiz_category":{"id":0}
+}
+```
+###Response
+```bash
+{
+  "question": {
+    "answer": "Mona Lisa",
+    "category": 2,
+    "difficulty": 3,
+    "id": 17,
+    "question": "La Giaconda is better known as what?"
+  }
+}
+```
+##Errors
+for abnormal operations you may receive descrptive error messages
+###Not Found Resource
+```bash
+ {
+        "success": False, 
+        "error": 422,
+        "message": "Unprocessable"
+        }
+```
+### Unprocessable Request
+```bash
+        {
+        "success": False, 
+        "error": 404,
+        "message": "Not found"
+        }
+```
+ 
